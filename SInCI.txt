@@ -1,0 +1,392 @@
+mainactivity
+
+package com.example.menu;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.example.menu.databinding.ActivityMainBinding;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
+public class MainActivity extends AppCompatActivity {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if(id==R.id.SI)
+        {
+            Intent i = new Intent(getApplicationContext(),MainActivity2.class);
+            startActivity(i);
+        }
+        if(id==R.id.CI)
+        {
+            Intent i = new Intent(getApplicationContext(),MainActivity3.class);
+            startActivity(i);
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+}
+
+menu_main
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.menu.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/SI"
+        android:orderInCategory="101"
+        android:title="Simple Int" />
+    <item
+        android:id="@+id/CI"
+        android:orderInCategory="102"
+        android:title="Compound Int" />
+</menu>
+
+mainactivity2(SI)
+
+package com.example.menu;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity2 extends AppCompatActivity {
+    TextView tv1,tv2,tv3;
+    EditText te1,te2,te3,te4;
+    Button b1;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        tv1=(TextView) findViewById(R.id.tv1);
+        tv2=(TextView) findViewById(R.id.tv2);
+        tv3=(TextView) findViewById(R.id.tv3);
+        te1=(EditText) findViewById(R.id.te1);
+        te2=(EditText) findViewById(R.id.te2);
+        te3=(EditText) findViewById(R.id.te3);
+        te4=(EditText) findViewById(R.id.te4);
+        b1=(Button) findViewById(R.id.b1);
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int n1=Integer.parseInt(te1.getText().toString());
+                int n2=Integer.parseInt(te2.getText().toString());
+                int n3=Integer.parseInt(te3.getText().toString());
+                int r=(n1*n2*n3)/100;
+                te4.setText(Integer.toString(r));
+            }
+        });
+    }
+}
+
+xml:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="84dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="45dp"
+        android:text="AMOUNT"
+        app:layout_constraintEnd_toStartOf="@+id/te1"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/te1"
+        android:layout_width="212dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="89dp"
+        android:text="RATE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
+    <EditText
+        android:id="@+id/te2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="39dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/te1" />
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="120dp"
+        android:text="year"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
+    <EditText
+        android:id="@+id/te3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="42dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/te2" />
+
+    <Button
+        android:id="@+id/b1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="86dp"
+        android:layout_marginEnd="71dp"
+        android:text="calculate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/te3" />
+
+    <EditText
+        android:id="@+id/te4"
+        android:layout_width="158dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="84dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="result"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+mainactivity3(CI)
+
+package com.example.menu;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+
+public class MainActivity3 extends AppCompatActivity {
+    TextView t1,t3,t5;
+    EditText t2,t4,t6,t7;
+    Button b2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main3);
+        t1=(TextView) findViewById(R.id.t1);
+        t3=(TextView) findViewById(R.id.t3);
+        t5=(TextView) findViewById(R.id.t5);
+        t2=(EditText) findViewById(R.id.t2);
+        t4=(EditText) findViewById(R.id.t4);
+        t6=(EditText) findViewById(R.id.t6);
+        t7=(EditText) findViewById(R.id.t7);
+        b2=(Button) findViewById(R.id.b2);
+
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int n1=Integer.parseInt(t2.getText().toString());
+                int n2=Integer.parseInt(t4.getText().toString());
+                int n3=Integer.parseInt(t6.getText().toString());
+                double r=Math.pow((1+n2/100),n3)*n1;
+                t7.setText(Double.toString(r));
+            }
+        });
+    }
+}
+
+xml:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity3">
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="95dp"
+        android:text="AMOUNT"
+        app:layout_constraintEnd_toStartOf="@+id/t2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/t2"
+        android:layout_width="206dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/t3"
+        android:layout_width="41dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="44dp"
+        android:text="RATE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t1" />
+
+    <EditText
+        android:id="@+id/t4"
+        android:layout_width="213dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="37dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t2" />
+
+    <TextView
+        android:id="@+id/t5"
+        android:layout_width="65dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="33dp"
+        android:text="TIME"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t3" />
+
+    <EditText
+        android:id="@+id/t6"
+        android:layout_width="203dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t4" />
+
+    <Button
+        android:id="@+id/b2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="99dp"
+        android:layout_marginEnd="36dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t6" />
+
+    <EditText
+        android:id="@+id/t7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="96dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="RESULT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t5" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
